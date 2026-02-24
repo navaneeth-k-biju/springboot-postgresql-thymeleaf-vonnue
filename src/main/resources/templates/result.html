@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🧭 Decision Companion</h1>
+        <p class="subtitle" th:text="${decision.title}"></p>
+    </div>
+
+    <div class="card card-highlight" th:if="${topOption != null}">
+        <div class="recommendation-badge">⭐ Top Recommendation</div>
+        <h2 th:text="${topOption.optionName}"></h2>
+        <p th:text="${topOption.summary}"></p>
+        <div class="score-bar-wrapper">
+            <div class="score-bar">
+                <div class="score-bar-fill"
+                     th:style="'width:' + ${topOption.percentage} + '%'"></div>
+            </div>
+            <span class="score-label"
+                  th:text="${#numbers.formatDecimal(topOption.percentage, 1, 1) + '%'}"></span>
+        </div>
+    </div>
+
+    <h2 class="section-title">Full Ranking</h2>
+
+    <div th:each="item : ${rankedOptions}" class="card result-card"
+         th:classappend="${item.rank == 1} ? ' card-highlight' : ''">
+
+        <div class="result-header">
+            <div class="rank-badge" th:text="'#' + ${item.rank}"></div>
+            <div class="result-title">
+                <h3 th:text="${item.optionName}"></h3>
+                <span class="score-meta"
+                      th:text="${#numbers.formatDecimal(item.totalScore, 1, 1)}
+                               + ' / '
+                               + ${#numbers.formatDecimal(item.maxPossibleScore, 1, 1)}
+                               + ' pts (' + ${#numbers.formatDecimal(item.percentage, 1, 1)} + '%)'">
+                </span>
+            </div>
+        </div>
+
+        <div class="score-bar-wrapper">
+            <div class="score-bar">
+                <div class="score-bar-fill"
+                     th:style="'width:' + ${item.percentage} + '%'"
+                     th:classappend="${item.rank == 1} ? ' fill-gold' : ''"></div>
+            </div>
+        </div>
+
+        <details class="explanation">
+            <summary>Why? See breakdown</summary>
+            <ul class="explanation-list">
+                <li th:each="line : ${item.explanationLines}" th:text="${line}"></li>
+            </ul>
+            <p class="summary-text" th:text="${item.summary}"></p>
+        </details>
+    </div>
+
+    <div class="actions">
+        <a th:href="@{/decision/{id}/score(id=${decision.id})}" class="btn btn-outline">← Re-score</a>
+        <a th:href="@{/decision/{id}/detail(id=${decision.id})}" class="btn btn-outline">Edit Options</a>
+        <a href="/new" class="btn btn-primary">Start New Decision</a>
+    </div>
+</div>
+</body>
+</html>
