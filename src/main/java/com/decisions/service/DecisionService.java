@@ -43,6 +43,10 @@ public class DecisionService {
                 .orElseThrow(() -> new RuntimeException("Decision not found with id: " + id));
     }
 
+    public List<Decision> getDecisionHistory() {
+        return decisionRepository.findAllByOrderByIdDesc();
+    }
+
     public DecisionOption addOption(Long decisionId, String optionName) {
         Decision decision = getDecisionById(decisionId);
         DecisionOption option = new DecisionOption(optionName, decision);

@@ -32,6 +32,12 @@ public class DecisionController {
         return "decision-form";
     }
 
+    @GetMapping("/history")
+    public String showHistory(Model model) {
+        model.addAttribute("decisions", decisionService.getDecisionHistory());
+        return "history";
+    }
+
     @PostMapping("/decision/create")
     public String createDecision(@ModelAttribute Decision decision) {
         Decision saved = decisionService.saveDecision(decision);
