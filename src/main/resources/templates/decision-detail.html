@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Options & Criteria</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🧭 Decision Companion</h1>
+        <p class="subtitle" th:text="${decision.title}"></p>
+    </div>
+
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+    <div th:if="${decision.description}" class="card card-muted">
+        <p th:text="${decision.description}"></p>
+    </div>
+
+    <div class="two-col">
+
+        <div class="card">
+            <h2>Options</h2>
+            <p class="hint">What are you choosing between?</p>
+
+            <form th:action="@{/decision/{id}/addOption(id=${decision.id})}" method="post">
+                <div class="inline-form">
+                    <input type="text" name="optionName" placeholder="e.g. Option A" required class="input-field"/>
+                    <button type="submit" class="btn btn-secondary">Add</button>
+                </div>
+            </form>
+
+            <ul class="item-list" th:if="${!decision.options.isEmpty()}">
+                <li th:each="option : ${decision.options}" class="item-row">
+                    <span th:text="${option.name}"></span>
+                    <form th:action="@{/decision/{id}/deleteOption(id=${decision.id})}" method="post" style="display:inline">
+                        <input type="hidden" name="optionId" th:value="${option.id}"/>
+                        <button type="submit" class="btn-delete">✕</button>
+                    </form>
+                </li>
+            </ul>
+            <p class="empty-msg" th:if="${decision.options.isEmpty()}">No options added yet.</p>
+        </div>
+
+        <div class="card">
+            <h2>Criteria</h2>
+            <p class="hint">What matters when choosing? Set a weight (1=Low, 5=Very High).</p>
+
+            <form th:action="@{/decision/{id}/addCriteria(id=${decision.id})}" method="post">
+                <div class="form-group">
+                    <input type="text" name="criteriaName" placeholder="e.g. Salary, Location, Growth..." required class="input-field"/>
+                </div>
+                <div class="inline-form">
+                    <select name="weight" class="input-field select-small">
+                        <option value="1">1 - Very Low</option>
+                        <option value="2">2 - Low</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4 - High</option>
+                        <option value="5">5 - Very High</option>
+                    </select>
+                    <button type="submit" class="btn btn-secondary">Add</button>
+                </div>
+            </form>
+
+            <ul class="item-list" th:if="${!decision.criteriaList.isEmpty()}">
+                <li th:each="c : ${decision.criteriaList}" class="item-row">
+                    <span>
+                        <strong th:text="${c.name}"></strong>
+                        <span class="badge" th:text="'Weight: ' + ${c.weight}"></span>
+                    </span>
+                    <form th:action="@{/decision/{id}/deleteCriteria(id=${decision.id})}" method="post" style="display:inline">
+                        <input type="hidden" name="criteriaId" th:value="${c.id}"/>
+                        <button type="submit" class="btn-delete">✕</button>
+                    </form>
+                </li>
+            </ul>
+            <p class="empty-msg" th:if="${decision.criteriaList.isEmpty()}">No criteria added yet.</p>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a th:href="@{/history}" class="btn btn-outline">View History</a>
+        <a th:href="@{/decision/{id}/score(id=${decision.id})}" class="btn btn-primary">
+            Next: Score Options →
+        </a>
+    </div>
+</div>
+</body>
+</html>

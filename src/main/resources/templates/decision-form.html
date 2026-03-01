@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Decision Companion</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🧭 Decision Companion</h1>
+        <p class="subtitle">Make better decisions through structured thinking</p>
+    </div>
+
+    <div class="actions">
+        <a th:href="@{/history}" class="btn btn-outline">View History</a>
+    </div>
+
+    <div class="card">
+        <h2>Start a New Decision</h2>
+        <p class="hint">What decision are you trying to make? Give it a clear title and optionally describe your context.</p>
+
+        <form th:action="@{/decision/create}" th:object="${decision}" method="post">
+            <div class="form-group">
+                <label for="title">Decision Title *</label>
+                <input type="text" id="title" th:field="*{title}"
+                       placeholder="e.g. Which job offer should I accept?"
+                       required class="input-field"/>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description (optional)</label>
+                <textarea id="description" th:field="*{description}"
+                          placeholder="Add context or constraints that matter..."
+                          rows="3" class="input-field"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Next: Add Options & Criteria →</button>
+        </form>
+    </div>
+
+    <div class="steps-guide">
+        <h3>How it works</h3>
+        <div class="steps">
+            <div class="step">
+                <span class="step-num">1</span>
+                <span>Name your decision</span>
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <span>Add options &amp; criteria with weights</span>
+            </div>
+            <div class="step">
+                <span class="step-num">3</span>
+                <span>Score each option</span>
+            </div>
+            <div class="step">
+                <span class="step-num">4</span>
+                <span>Get a ranked recommendation</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

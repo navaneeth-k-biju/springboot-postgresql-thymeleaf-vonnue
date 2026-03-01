@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Score Options</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🧭 Decision Companion</h1>
+        <p class="subtitle" th:text="${decision.title}"></p>
+    </div>
+
+    <div class="card">
+        <h2>Score Your Options</h2>
+        <p class="hint">Rate each option against every criterion from 1 (very poor) to 10 (excellent).</p>
+
+        <form th:action="@{/decision/{id}/score(id=${decision.id})}" method="post">
+
+            <input th:each="option : ${decision.options}"
+                   type="hidden" name="optionIds" th:value="${option.id}"/>
+
+            <input th:each="c : ${decision.criteriaList}"
+                   type="hidden" name="criteriaIds" th:value="${c.id}"/>
+
+            <div class="score-table-wrapper">
+                <table class="score-table">
+                    <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th th:each="c : ${decision.criteriaList}">
+                            <span th:text="${c.name}"></span>
+                            <span class="badge" th:text="'W:' + ${c.weight}"></span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="option : ${decision.options}">
+                        <td class="option-label" th:text="${option.name}"></td>
+                        <td th:each="c : ${decision.criteriaList}">
+                            <input type="number"
+                                   name="scores"
+                                   min="1" max="10"
+                                   value="5"
+                                   required
+                                   class="score-input"
+                                   th:title="'Rate ' + ${option.name} + ' on ' + ${c.name}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="actions">
+                <a th:href="@{/decision/{id}/detail(id=${decision.id})}" class="btn btn-outline">← Back</a>
+                <a th:href="@{/history}" class="btn btn-outline">View History</a>
+                <button type="submit" class="btn btn-primary">Get Recommendation →</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
