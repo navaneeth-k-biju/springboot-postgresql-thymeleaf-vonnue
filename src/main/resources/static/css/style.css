@@ -318,6 +318,33 @@ body {
 
 .steps-guide h3 { font-size: 1rem; margin-bottom: 14px; color: #4a5568; }
 
+/* ── History ──────────────────────────────────────────── */
+.history-list {
+    display: grid;
+    gap: 14px;
+}
+
+.history-card {
+    margin-bottom: 0;
+}
+
+.history-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.history-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: #718096;
+    font-size: .88rem;
+    margin-top: 8px;
+}
+
 .steps {
     display: flex;
     gap: 12px;

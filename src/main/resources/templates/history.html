@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Decision History</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🧭 Decision History</h1>
+        <p class="subtitle">Browse your past decisions</p>
+    </div>
+
+    <div class="actions">
+        <a th:href="@{/}" class="btn btn-primary">+ New Decision</a>
+    </div>
+
+    <div th:if="${decisions.isEmpty()}" class="card">
+        <p class="empty-msg">No decision history yet. Start your first decision.</p>
+    </div>
+
+    <div th:if="${!decisions.isEmpty()}" class="history-list">
+        <div class="card history-card" th:each="decision : ${decisions}">
+            <div class="history-head">
+                <h2 th:text="${decision.title}">Decision Title</h2>
+                <span class="badge" th:text="'ID: ' + ${decision.id}">ID</span>
+            </div>
+
+            <p class="hint" th:if="${decision.description}" th:text="${decision.description}"></p>
+
+            <p class="history-meta">
+                <span th:text="${decision.options.size()} + ' options'"></span>
+                <span>•</span>
+                <span th:text="${decision.criteriaList.size()} + ' criteria'"></span>
+            </p>
+
+            <div class="actions">
+                <a th:href="@{/decision/{id}/detail(id=${decision.id})}" class="btn btn-outline">Open</a>
+                <a th:href="@{/decision/{id}/result(id=${decision.id})}" class="btn btn-secondary">View Result</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
