@@ -1,4 +1,4 @@
-# 🔎 Research Log – Decision Companion System
+#  Research Log – Decision Companion System
 
 This document contains the research and prompt history that influenced the development of the Decision Companion System.
 
@@ -14,15 +14,15 @@ Contents:
 #  All AI Prompts Used
 
 
-1. "Design and build a Decision Companion System that helps users evaluate multiple options using weighted criteria."
+1. "Explain Decision Companion System."
 
-2. "Convert this idea into a Spring Boot project architecture diagram."
+2. "Take me through its advantages and disadvantages."
 
-3. "Explain how to model many-to-many relationship with additional attributes in JPA."
+3. "How do i integrate api into a springboot project."
 
-4. "Why do we need two foreign keys in a decision score table?"
+4. "Free api's provided."
 
-5. "Why do we use repository and service layer in Spring Boot?"
+5. "Explain how to model many-to-many relationship with additional attributes in JPA."
 
 6. "What is the best way to structure entities for a decision scoring system?"
 
@@ -86,7 +86,7 @@ Contents:
 
 36. "which database is easier to host"
 
-37. "git stash pop"
+37. "git stash pop?"
 
 38. "why do we use transactional"
 
